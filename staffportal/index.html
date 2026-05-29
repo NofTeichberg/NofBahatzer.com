@@ -556,8 +556,8 @@ function sbPost(t, d) {
     headers: Object.assign({}, SB_H, { 'Prefer': 'resolution=merge-duplicates,return=minimal' }),
     body: JSON.stringify(d)
   }).then(function(r) {
-    if (!r.ok) return r.json().then(function(err) { throw new Error((err && (err.message || err.hint || JSON.stringify(err))) || 'HTTP ' + r.status); });
-    return r.status === 204 ? null : r.json();
+    if (!r.ok) return r.json().catch(function(){ return {message:'HTTP '+r.status}; }).then(function(err) { throw new Error((err && (err.message || err.hint || JSON.stringify(err))) || 'HTTP ' + r.status); });
+    return null;
   });
 }
 async function getEmp(email) {
@@ -616,6 +616,7 @@ async function upsertEmp(e) {
     });
   } catch (err) {
     console.warn('לא הצלחנו לשמור עובד ב-Supabase:', err);
+    toast('שגיאה בשמירת פרטי עובד — ' + (err.message || err));
   }
   return emp;
 }
@@ -627,6 +628,18 @@ async function saveSc(email, key, score, correct, wrong, totalQ, passed) {
   emp.scores[key] = n;
   localStorage.setItem('emp_' + email, JSON.stringify(emp));
   if (_emp && _emp.email === email) { if (!_emp.scores) _emp.scores = {}; _emp.scores[key] = n; }
+  // וודא שהעובד קיים ב-Supabase לפני שמירת הציון
+  if (state && state.user && state.restaurant) {
+    try {
+      await sbPost('employees', {
+        name: state.user.name || email, email: email,
+        restaurant: state.restaurant,
+        restaurant_name: (CONTENT[state.restaurant] || {}).name || '',
+        role: state.role || 'floor',
+        registered_at: new Date().toISOString()
+      });
+    } catch (err) { console.warn('employee ensure failed:', err); }
+  }
   try {
     await sbPost('exam_attempts', {
       employee_email: email, exam_key: key, score: n,
