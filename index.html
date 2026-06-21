@@ -34,7 +34,6 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ── Top bar ── */
   .top-bar {
     border-bottom: 1px solid var(--line);
     padding: 10px 32px;
@@ -60,10 +59,7 @@
     text-decoration: none;
   }
 
-  .logo img {
-    height: 52px;
-    width: auto;
-  }
+  .logo img { height: 52px; width: auto; }
 
   .logo-tagline {
     font-size: 12px;
@@ -73,11 +69,7 @@
     line-height: 1.4;
   }
 
-  .top-nav {
-    display: flex;
-    gap: 28px;
-    align-items: center;
-  }
+  .top-nav { display: flex; gap: 28px; align-items: center; }
 
   .top-nav a {
     color: var(--text);
@@ -89,7 +81,6 @@
 
   .top-nav a:hover { color: var(--green); }
 
-  /* ── Hero ── */
   .hero {
     position: relative;
     min-height: 88vh;
@@ -177,23 +168,12 @@
     font-family: inherit;
   }
 
-  .btn-primary {
-    background: var(--green);
-    color: var(--white);
-    border-color: var(--green);
-  }
+  .btn-primary { background: var(--green); color: var(--white); border-color: var(--green); }
   .btn-primary:hover { background: var(--green-dark); border-color: var(--green-dark); }
-
-  .btn-secondary {
-    background: transparent;
-    color: var(--white);
-    border-color: rgba(255,255,255,0.8);
-  }
+  .btn-secondary { background: transparent; color: var(--white); border-color: rgba(255,255,255,0.8); }
   .btn-secondary:hover { background: var(--white); color: var(--green-dark); border-color: var(--white); }
 
-  /* ── Sections ── */
   section { padding: 90px 32px; }
-
   .container { max-width: 1180px; margin: 0 auto; }
 
   .section-label {
@@ -214,14 +194,8 @@
     line-height: 1.3;
   }
 
-  .section-text {
-    font-size: 15px;
-    color: var(--text-soft);
-    line-height: 1.85;
-    max-width: 560px;
-  }
+  .section-text { font-size: 15px; color: var(--text-soft); line-height: 1.85; max-width: 560px; }
 
-  /* ── About / two-col ── */
   .about { background: var(--beige-light); }
 
   .two-col {
@@ -231,57 +205,24 @@
     align-items: center;
   }
 
-  .two-col-img {
-    width: 100%;
-    height: 520px;
-    object-fit: cover;
-  }
+  .two-col-img { width: 100%; height: 520px; object-fit: cover; }
 
-  /* Wine section flips image to left */
   .wine-kitchen { background: var(--white); }
   .wine-kitchen .two-col { direction: ltr; }
   .wine-kitchen .two-col .text-block { direction: rtl; }
 
-  /* ── Gallery ── */
   .gallery { background: var(--beige); }
-
   .gallery-header { text-align: center; margin-bottom: 56px; }
   .gallery-header .section-text { margin: 0 auto; }
 
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-  }
-
-  .gallery-item {
-    overflow: hidden;
-    aspect-ratio: 4/5;
-  }
-
-  .gallery-item.wide {
-    grid-column: span 2;
-    aspect-ratio: 8/5;
-  }
-
-  .gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s ease;
-    display: block;
-  }
-
+  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .gallery-item { overflow: hidden; aspect-ratio: 4/5; }
+  .gallery-item.wide { grid-column: span 2; aspect-ratio: 8/5; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; display: block; }
   .gallery-item:hover img { transform: scale(1.04); }
 
-  /* ── Info ── */
   .info { background: var(--white); }
-
-  .info-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 48px;
-  }
+  .info-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 48px; }
 
   .info-block h3 {
     font-family: 'Frank Ruhl Libre', serif;
@@ -314,76 +255,24 @@
     letter-spacing: 0.5px;
   }
 
-  /* ── Final CTA ── */
-  .final-cta {
-    background: var(--green);
-    color: var(--white);
-    text-align: center;
-    padding: 96px 32px;
-  }
-
+  .final-cta { background: var(--green); color: var(--white); text-align: center; padding: 96px 32px; }
   .final-cta .section-label { color: var(--beige-dark); }
-
-  .final-cta h2 {
-    font-family: 'Frank Ruhl Libre', serif;
-    font-size: 36px;
-    font-weight: 400;
-    margin-bottom: 18px;
-    line-height: 1.3;
-  }
-
+  .final-cta h2 { font-family: 'Frank Ruhl Libre', serif; font-size: 36px; font-weight: 400; margin-bottom: 18px; line-height: 1.3; }
   .final-cta p { font-size: 15px; opacity: 0.88; max-width: 500px; margin: 0 auto 34px; line-height: 1.8; }
-
-  .final-cta .btn-primary {
-    background: var(--beige);
-    color: var(--green-dark);
-    border-color: var(--beige);
-  }
+  .final-cta .btn-primary { background: var(--beige); color: var(--green-dark); border-color: var(--beige); }
   .final-cta .btn-primary:hover { background: var(--white); border-color: var(--white); }
-
   .final-cta .btn-secondary { border-color: rgba(244,237,224,0.7); color: var(--beige); }
   .final-cta .btn-secondary:hover { background: var(--beige); color: var(--green-dark); border-color: var(--beige); }
 
-  /* ── Footer ── */
-  footer {
-    background: var(--beige-dark);
-    padding: 48px 32px 28px;
-  }
-
-  .footer-inner {
-    max-width: 1180px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 24px;
-  }
-
+  footer { background: var(--beige-dark); padding: 48px 32px 28px; }
+  .footer-inner { max-width: 1180px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
   .footer-logo { height: 44px; width: auto; opacity: 0.85; }
-
   .footer-left p { font-size: 13px; color: var(--text-soft); margin-top: 6px; }
-
   .footer-links { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
-  .footer-links a {
-    color: var(--text);
-    text-decoration: none;
-    font-size: 13px;
-    transition: color 0.2s;
-  }
+  .footer-links a { color: var(--text); text-decoration: none; font-size: 13px; transition: color 0.2s; }
   .footer-links a:hover { color: var(--green); }
+  .footer-bottom { max-width: 1180px; margin: 28px auto 0; padding-top: 18px; border-top: 1px solid rgba(45,45,42,0.1); text-align: center; font-size: 12px; color: var(--text-soft); }
 
-  .footer-bottom {
-    max-width: 1180px;
-    margin: 28px auto 0;
-    padding-top: 18px;
-    border-top: 1px solid rgba(45,45,42,0.1);
-    text-align: center;
-    font-size: 12px;
-    color: var(--text-soft);
-  }
-
-  /* ── Responsive ── */
   @media (max-width: 900px) {
     .top-bar { padding: 10px 18px; }
     .top-nav { display: none; }
@@ -417,79 +306,19 @@
 <body>
 
 <!-- Hiring Popup -->
-<div id="hiring-popup" style="
-  display:flex;
-  position:fixed;
-  inset:0;
-  z-index:1000;
-  align-items:center;
-  justify-content:center;
-  background:rgba(30,30,27,0.6);
-  backdrop-filter:blur(4px);
-  padding:20px;
-">
-  <div style="
-    background:var(--beige-light);
-    max-width:440px;
-    width:100%;
-    padding:48px 44px 40px;
-    position:relative;
-    text-align:center;
-  ">
-    <button onclick="document.getElementById('hiring-popup').style.display='none'" style="
-      position:absolute;
-      top:16px;
-      left:20px;
-      background:none;
-      border:none;
-      font-size:20px;
-      color:var(--text-soft);
-      cursor:pointer;
-      line-height:1;
-      font-family:inherit;
-    ">&#x2715;</button>
-
+<div id="hiring-popup" style="display:flex;position:fixed;inset:0;z-index:1000;align-items:center;justify-content:center;background:rgba(30,30,27,0.6);backdrop-filter:blur(4px);padding:20px;">
+  <div style="background:var(--beige-light);max-width:440px;width:100%;padding:48px 44px 40px;position:relative;text-align:center;">
+    <button onclick="document.getElementById('hiring-popup').style.display='none'" style="position:absolute;top:16px;left:20px;background:none;border:none;font-size:20px;color:var(--text-soft);cursor:pointer;line-height:1;font-family:inherit;">&#x2715;</button>
     <img src="images/logo.png" alt="נוף בחצר" style="height:64px;width:auto;margin-bottom:24px;">
-
     <div style="font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--green);margin-bottom:14px;font-weight:400;">מגייסים צוות</div>
-
-    <h2 style="font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:400;color:var(--text);margin-bottom:16px;line-height:1.35;">
-      אנשים טובים שהם משפחה
-    </h2>
-
-    <p style="font-size:14px;color:var(--text-soft);line-height:1.85;margin-bottom:28px;">
-      אנחנו מחפשים אנשים טובים שאוהבים לארח ולשמח.
-      תנאים מעולים, סביבת עבודה חמה ומשפחתית, ומקום שבאמת שווה לבוא אליו בבוקר.
-    </p>
-
-    <a href="https://api.whatsapp.com/send?phone=9720542364455&text=%D7%94%D7%99%D7%99%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%A9%D7%90%D7%AA%D7%9D%20%D7%9E%D7%92%D7%99%D7%99%D7%A1%D7%99%D7%9D%20%D7%A6%D7%95%D7%95%D7%AA%20%F0%9F%99%82" target="_blank" style="
-      display:inline-block;
-      background:var(--green);
-      color:var(--white);
-      text-decoration:none;
-      padding:13px 32px;
-      font-size:14px;
-      letter-spacing:1px;
-      border:1px solid var(--green);
-      font-family:inherit;
-      margin-bottom:14px;
-      transition:background 0.2s;
-    ">שלחו לנו וואטסאפ</a>
-
+    <h2 style="font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:400;color:var(--text);margin-bottom:16px;line-height:1.35;">אנשים טובים שהם משפחה</h2>
+    <p style="font-size:14px;color:var(--text-soft);line-height:1.85;margin-bottom:28px;">אנחנו מחפשים אנשים טובים שאוהבים לארח ולשמח. תנאים מעולים, סביבת עבודה חמה ומשפחתית, ומקום שבאמת שווה לבוא אליו בבוקר.</p>
+    <a href="https://api.whatsapp.com/send?phone=9720542364455&text=%D7%94%D7%99%D7%99%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%A9%D7%90%D7%AA%D7%9D%20%D7%9E%D7%92%D7%99%D7%99%D7%A1%D7%99%D7%9D%20%D7%A6%D7%95%D7%95%D7%AA%20%F0%9F%99%82" target="_blank" style="display:inline-block;background:var(--green);color:var(--white);text-decoration:none;padding:13px 32px;font-size:14px;letter-spacing:1px;border:1px solid var(--green);font-family:inherit;margin-bottom:14px;transition:background 0.2s;">שלחו לנו וואטסאפ</a>
     <div style="margin-top:4px;">
-      <button onclick="document.getElementById('hiring-popup').style.display='none'" style="
-        background:none;
-        border:none;
-        font-size:13px;
-        color:var(--text-soft);
-        cursor:pointer;
-        font-family:inherit;
-        text-decoration:underline;
-      ">אולי בפעם אחרת</button>
+      <button onclick="document.getElementById('hiring-popup').style.display='none'" style="background:none;border:none;font-size:13px;color:var(--text-soft);cursor:pointer;font-family:inherit;text-decoration:underline;">אולי בפעם אחרת</button>
     </div>
   </div>
 </div>
-
 
 <header class="top-bar">
   <div class="top-bar-inner">
@@ -507,7 +336,6 @@
   </div>
 </header>
 
-<!-- Hero -->
 <section class="hero">
   <video class="hero-media" autoplay muted loop playsinline poster="images/hero-poster.jpg">
     <source src="hero-video.mp4" type="video/mp4">
@@ -517,10 +345,7 @@
     <img class="hero-logo" src="images/logo.png" alt="נוף בחצר">
     <div class="hero-eyebrow">המכבים 29, הוד השרון</div>
     <h1 class="hero-title">חצר אורבנית קסומה<br><span style="font-size:0.62em;font-weight:300;opacity:0.88;letter-spacing:2px;line-height:0.6;display:block;">בלב השרון</span></h1>
-    <p class="hero-text">
-      בית קפה בבוקר, בר יין בערב וחנות יין לכל אורך היום.<br>
-      מקום מפגש סביב יין טוב, אוכל טרי וטעים ומוזיקה שמחברת הכל יחד.
-    </p>
+    <p class="hero-text">בית קפה בבוקר, בר יין בערב וחנות יין לכל אורך היום.<br>מקום מפגש סביב יין טוב, אוכל טרי וטעים ומוזיקה שמחברת הכל יחד.</p>
     <div class="cta-row">
       <a href="https://ontopo.co.il/nofbahatzer?source=homepage" target="_blank" class="btn btn-primary">הזמנת מקום</a>
       <a href="https://nof-bahatzer.web.delivery/" target="_blank" class="btn btn-secondary">לתפריט</a>
@@ -528,24 +353,17 @@
   </div>
 </section>
 
-<!-- About -->
 <section class="about" id="about">
   <div class="container">
     <div class="two-col">
       <div class="text-block">
         <div class="section-label">המקום</div>
         <h2 class="section-title">חצר קטנה, אווירה גדולה</h2>
-        <p class="section-text">
-          בחצר אורבנית קסומה בלב הוד השרון נפגשים יין, אוכל טוב ואנשים טובים.
-          בית קפה בבוקר, בר יין בערב — מקום מפגש שמזמין אתכם פשוט להגיע, להירגע ולהנות.
-        </p>
+        <p class="section-text">בחצר אורבנית קסומה בלב הוד השרון נפגשים יין, אוכל טוב ואנשים טובים. בית קפה בבוקר, בר יין בערב — מקום מפגש שמזמין אתכם פשוט להגיע, להירגע ולהנות.</p>
         <br>
-        <p class="section-text">
-          המטבח שלנו עונתי וקליל: מנות שניתן לחלוק, עם חומרי גלם האיכותיים ביותר.
-          אנחנו לא מתחכמים יתר על המידה — רק טריות ועונתיות בכל צלחת.
-        </p>
+        <p class="section-text">המטבח שלנו עונתי וקליל: מנות שניתן לחלוק, עם חומרי גלם האיכותיים ביותר. אנחנו לא מתחכמים יתר על המידה — רק טריות ועונתיות בכל צלחת.</p>
       </div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; height:520px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;height:520px;">
         <img style="width:100%;height:100%;object-fit:cover;" src="images/food-3.jpg" alt="פיצה ובירה" loading="lazy">
         <img style="width:100%;height:100%;object-fit:cover;" src="images/food-2.jpg" alt="מנה עונתית" loading="lazy">
       </div>
@@ -553,28 +371,21 @@
   </div>
 </section>
 
-<!-- Wine & Kitchen -->
 <section class="wine-kitchen">
   <div class="container">
     <div class="two-col">
       <div class="text-block">
         <div class="section-label">יין ומטבח</div>
         <h2 class="section-title">מעל 120 סוגי יין, תפריט שמתחלף כל יום</h2>
-        <p class="section-text">
-          בחנות היין שלנו תמצאו מעל 120 סוגי יין ממדינות שונות מסביב לעולם — את כולם ניתן לפתוח ולשתות ישירות בישיבה.
-          תפריט היין שלנו מתחלף על בסיס יומי, כדי שתמיד תמצאו משהו חדש.
-        </p>
+        <p class="section-text">בחנות היין שלנו תמצאו מעל 120 סוגי יין ממדינות שונות מסביב לעולם — את כולם ניתן לפתוח ולשתות ישירות בישיבה. תפריט היין שלנו מתחלף על בסיס יומי, כדי שתמיד תמצאו משהו חדש.</p>
         <br>
-        <p class="section-text">
-          כחנות יין אנחנו מתחייבים למחיר הכי משתלם בישראל. מגוון עשיר, מחירים הוגנים — לקנייה הביתה ולשתייה במקום.
-        </p>
+        <p class="section-text">כחנות יין אנחנו מתחייבים למחיר הכי משתלם בישראל. מגוון עשיר, מחירים הוגנים — לקנייה הביתה ולשתייה במקום.</p>
       </div>
       <img class="two-col-img" src="images/wine.jpg" alt="כוס יין בחצר">
     </div>
   </div>
 </section>
 
-<!-- Gallery -->
 <section class="gallery" id="gallery">
   <div class="container">
     <div class="gallery-header">
@@ -582,7 +393,6 @@
       <h2 class="section-title">רגעים מהחצר</h2>
       <p class="section-text">הצצה לאווירה, לאוכל וליינות שמחכים לכם.</p>
     </div>
-    <!-- Carousel -->
     <div class="carousel-wrap">
       <button class="carousel-btn carousel-prev" onclick="moveCarousel(-1)" aria-label="הקודם">&#8249;</button>
       <div class="carousel-track-wrap">
@@ -598,82 +408,23 @@
       </div>
       <button class="carousel-btn carousel-next" onclick="moveCarousel(1)" aria-label="הבא">&#8250;</button>
     </div>
-
-    <!-- Dots -->
     <div class="carousel-dots" id="carouselDots"></div>
   </div>
 </section>
 
 <style>
-  .carousel-wrap {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .carousel-track-wrap {
-    overflow: hidden;
-    flex: 1;
-    border-radius: 2px;
-  }
-  .carousel-track {
-    display: flex;
-    transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
-    will-change: transform;
-  }
-  .carousel-slide {
-    min-width: 33.333%;
-    aspect-ratio: 3/4;
-    flex-shrink: 0;
-    overflow: hidden;
-    max-height: 380px;
-  }
-  .carousel-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s ease;
-  }
+  .carousel-wrap { position: relative; display: flex; align-items: center; gap: 12px; }
+  .carousel-track-wrap { overflow: hidden; flex: 1; border-radius: 2px; }
+  .carousel-track { display: flex; transition: transform 0.45s cubic-bezier(0.4,0,0.2,1); will-change: transform; }
+  .carousel-slide { min-width: 33.333%; aspect-ratio: 3/4; flex-shrink: 0; overflow: hidden; max-height: 380px; }
+  .carousel-slide img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
   .carousel-slide:hover img { transform: scale(1.04); }
-  .carousel-btn {
-    background: var(--beige-light);
-    border: 1px solid var(--line);
-    color: var(--green-dark);
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    font-size: 22px;
-    cursor: pointer;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s;
-    line-height: 1;
-  }
+  .carousel-btn { background: var(--beige-light); border: 1px solid var(--line); color: var(--green-dark); width: 44px; height: 44px; border-radius: 50%; font-size: 22px; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: background 0.2s; line-height: 1; }
   .carousel-btn:hover { background: var(--beige-dark); }
-  .carousel-dots {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 20px;
-  }
-  .carousel-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--line);
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    transition: background 0.2s;
-  }
+  .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
+  .carousel-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--line); border: none; cursor: pointer; padding: 0; transition: background 0.2s; }
   .carousel-dot.active { background: var(--green); }
-
-  @media (max-width: 700px) {
-    .carousel-slide { min-width: 100%; }
-  }
+  @media (max-width: 700px) { .carousel-slide { min-width: 100%; } }
 </style>
 
 <script>
@@ -684,8 +435,6 @@
   const visible = window.innerWidth <= 700 ? 1 : 3;
   const total = slides.length;
   const max = total - visible;
-
-  // Build dots
   for (let i = 0; i <= max; i++) {
     const d = document.createElement('button');
     d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
@@ -693,19 +442,13 @@
     d.onclick = () => goTo(i);
     dotsWrap.appendChild(d);
   }
-
   function goTo(n) {
     current = Math.max(0, Math.min(n, max));
     const slideW = slides[0].getBoundingClientRect().width;
     track.style.transform = `translateX(${current * slideW}px)`;
-    dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => {
-      d.classList.toggle('active', i === current);
-    });
+    dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => { d.classList.toggle('active', i === current); });
   }
-
   function moveCarousel(dir) { goTo(current + dir); }
-
-  // Touch/swipe support
   let startX = 0;
   track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
   track.addEventListener('touchend', e => {
@@ -714,49 +457,32 @@
   });
 </script>
 
-<!-- Info -->
 <section class="info" id="info">
   <div class="container">
     <div class="info-grid">
-
       <div class="info-block">
         <h3>שעות פעילות</h3>
         <div class="hours-line"><span>ראשון–חמישי</span><span>23:00–10:00</span></div>
         <div class="hours-line"><span>שישי</span><span>16:00–08:00</span></div>
-        <div class="hours-line"><span>שבת</span><span>23:00–17:30</span></div>
+        <div class="hours-line"><span>שבת</span><span>23:00–20:00</span></div>
       </div>
-
       <div class="info-block">
         <h3>הזמנת מקומות</h3>
-        <p>
-          הזמנת מקומות מתאפשרת בערבים בין השעות 16:00–20:00 בלבד.
-          בכל שאר הזמן הישיבה על בסיס מקום פנוי.
-        </p>
+        <p>הזמנת מקומות מתאפשרת בערבים בין השעות 16:00–20:00 בלבד. בכל שאר הזמן הישיבה על בסיס מקום פנוי.</p>
       </div>
-
       <div class="info-block">
         <h3>חנייה וכתובת</h3>
-        <p>
-          המכבים 29, נווה נאמן, הוד השרון.
-          שימו לב — אין חנייה ברחוב המכבים.
-          ישנם 2 מגרשי חנייה ייעודיים סביב החצר, ובמרחק כ-150 צעדים מקניון שרונים.
-        </p>
+        <p>המכבים 29, נווה נאמן, הוד השרון. שימו לב — אין חנייה ברחוב המכבים. ישנם 2 מגרשי חנייה ייעודיים סביב החצר, ובמרחק כ-150 צעדים מקניון שרונים.</p>
       </div>
-
       <div class="info-block">
         <h3>שעה שמחה</h3>
-        <p>
-          ימי א'–ד', 16:00–10:00 — 20% הנחה על כל האלכוהול.<br>
-          18:30–16:00 — 20% הנחה על כל התפריט.
-        </p>
+        <p>ימי א'–ד', 16:00–10:00 — 20% הנחה על כל האלכוהול.<br>18:30–16:00 — 20% הנחה על כל התפריט.</p>
         <span class="tag">שווה להקדים</span>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- Final CTA -->
 <section class="final-cta">
   <div class="container">
     <div class="section-label">מחכים לכם</div>
@@ -769,7 +495,6 @@
   </div>
 </section>
 
-<!-- Footer -->
 <footer>
   <div class="footer-inner">
     <div class="footer-left">
