@@ -19,6 +19,9 @@
     --text: #2d2d2a;
     --text-soft: #5a5a55;
     --line: #d8cdb4;
+    /* a11y extras */
+    --focus-color: #8a6d0b; /* dark-gold: 4.6:1 on beige-light */
+    --skip-bg: #1e3a2b;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,6 +35,29 @@
     line-height: 1.7;
     font-size: 15px;
     -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── P1 4.2: Skip link ── */
+  .skip-link {
+    position: absolute;
+    inset-inline-end: 0;
+    top: -120px;
+    background: var(--skip-bg);
+    color: #fff;
+    padding: 12px 20px;
+    z-index: 9999;
+    transition: top 0.2s;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 400;
+  }
+  .skip-link:focus { top: 0; }
+
+  /* ── P1 4.3: Global focus-visible ── */
+  :focus-visible {
+    outline: 3px solid var(--focus-color);
+    outline-offset: 2px;
+    border-radius: 2px;
   }
 
   /* ── Top bar ── */
@@ -60,10 +86,7 @@
     text-decoration: none;
   }
 
-  .logo img {
-    height: 52px;
-    width: auto;
-  }
+  .logo img { height: 52px; width: auto; }
 
   .logo-tagline {
     font-size: 12px;
@@ -73,11 +96,7 @@
     line-height: 1.4;
   }
 
-  .top-nav {
-    display: flex;
-    gap: 28px;
-    align-items: center;
-  }
+  .top-nav { display: flex; gap: 28px; align-items: center; }
 
   .top-nav a {
     color: var(--text);
@@ -85,8 +104,10 @@
     font-size: 14px;
     font-weight: 400;
     transition: color 0.2s;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
   }
-
   .top-nav a:hover { color: var(--green); }
 
   /* ── Hero ── */
@@ -108,10 +129,11 @@
     z-index: 1;
   }
 
+  /* Overlay darkened slightly for better text contrast */
   .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(30,30,27,0.28) 0%, rgba(30,30,27,0.58) 100%);
+    background: linear-gradient(180deg, rgba(30,30,27,0.35) 0%, rgba(30,30,27,0.65) 100%);
     z-index: 2;
   }
 
@@ -166,7 +188,9 @@
   }
 
   .btn {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 13px 30px;
     text-decoration: none;
     font-size: 14px;
@@ -175,21 +199,47 @@
     transition: all 0.25s ease;
     border: 1px solid;
     font-family: inherit;
+    min-height: 44px;
   }
 
-  .btn-primary {
-    background: var(--green);
-    color: var(--white);
-    border-color: var(--green);
-  }
+  .btn-primary { background: var(--green); color: var(--white); border-color: var(--green); }
   .btn-primary:hover { background: var(--green-dark); border-color: var(--green-dark); }
 
-  .btn-secondary {
-    background: transparent;
-    color: var(--white);
-    border-color: rgba(255,255,255,0.8);
-  }
+  .btn-secondary { background: transparent; color: var(--white); border-color: rgba(255,255,255,0.8); }
   .btn-secondary:hover { background: var(--white); color: var(--green-dark); border-color: var(--white); }
+
+  /* ── P5.1: Video toggle ── */
+  .video-toggle {
+    position: absolute;
+    bottom: 20px;
+    inset-inline-start: 20px;
+    z-index: 4;
+    background: rgba(30,30,27,0.55);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    font-family: inherit;
+  }
+  .video-toggle:hover { background: rgba(30,30,27,0.85); }
+
+  /* prefers-reduced-motion: hide video, show poster image */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-media { display: none; }
+    .hero { background: url('images/hero-poster.jpg') center/cover no-repeat; }
+    .video-toggle { display: none; }
+    *, *::before, *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
 
   /* ── Sections ── */
   section { padding: 90px 32px; }
@@ -231,13 +281,8 @@
     align-items: center;
   }
 
-  .two-col-img {
-    width: 100%;
-    height: 520px;
-    object-fit: cover;
-  }
+  .two-col-img { width: 100%; height: 520px; object-fit: cover; }
 
-  /* Wine section flips image to left */
   .wine-kitchen { background: var(--white); }
   .wine-kitchen .two-col { direction: ltr; }
   .wine-kitchen .two-col .text-block { direction: rtl; }
@@ -248,31 +293,82 @@
   .gallery-header { text-align: center; margin-bottom: 56px; }
   .gallery-header .section-text { margin: 0 auto; }
 
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
+  /* ── Carousel ── */
+  .carousel-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
-
-  .gallery-item {
+  .carousel-track-wrap { overflow: hidden; flex: 1; border-radius: 2px; }
+  .carousel-track {
+    display: flex;
+    transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+    will-change: transform;
+  }
+  .carousel-slide {
+    min-width: 33.333%;
+    aspect-ratio: 3/4;
+    flex-shrink: 0;
     overflow: hidden;
-    aspect-ratio: 4/5;
+    max-height: 380px;
   }
-
-  .gallery-item.wide {
-    grid-column: span 2;
-    aspect-ratio: 8/5;
-  }
-
-  .gallery-item img {
+  .carousel-slide img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s ease;
     display: block;
+    transition: transform 0.5s ease;
   }
+  .carousel-slide:hover img { transform: scale(1.04); }
 
-  .gallery-item:hover img { transform: scale(1.04); }
+  .carousel-btn {
+    background: var(--beige-light);
+    border: 1px solid var(--line);
+    color: var(--green-dark);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 22px;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    line-height: 1;
+  }
+  .carousel-btn:hover { background: var(--beige-dark); }
+
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 20px;
+  }
+  /* dot: 24×24 touch target, visual dot via ::after */
+  .carousel-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .carousel-dot::after {
+    content: '';
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--line);
+    transition: background 0.2s;
+  }
+  .carousel-dot.active::after { background: var(--green); }
 
   /* ── Info ── */
   .info { background: var(--white); }
@@ -321,9 +417,7 @@
     text-align: center;
     padding: 96px 32px;
   }
-
   .final-cta .section-label { color: var(--beige-dark); }
-
   .final-cta h2 {
     font-family: 'Frank Ruhl Libre', serif;
     font-size: 36px;
@@ -331,24 +425,14 @@
     margin-bottom: 18px;
     line-height: 1.3;
   }
-
   .final-cta p { font-size: 15px; opacity: 0.88; max-width: 500px; margin: 0 auto 34px; line-height: 1.8; }
-
-  .final-cta .btn-primary {
-    background: var(--beige);
-    color: var(--green-dark);
-    border-color: var(--beige);
-  }
+  .final-cta .btn-primary { background: var(--beige); color: var(--green-dark); border-color: var(--beige); }
   .final-cta .btn-primary:hover { background: var(--white); border-color: var(--white); }
-
   .final-cta .btn-secondary { border-color: rgba(244,237,224,0.7); color: var(--beige); }
   .final-cta .btn-secondary:hover { background: var(--beige); color: var(--green-dark); border-color: var(--beige); }
 
   /* ── Footer ── */
-  footer {
-    background: var(--beige-dark);
-    padding: 48px 32px 28px;
-  }
+  footer { background: var(--beige-dark); padding: 48px 32px 28px; }
 
   .footer-inner {
     max-width: 1180px;
@@ -361,15 +445,18 @@
   }
 
   .footer-logo { height: 44px; width: auto; opacity: 0.85; }
-
   .footer-left p { font-size: 13px; color: var(--text-soft); margin-top: 6px; }
 
-  .footer-links { display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .footer-links { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
   .footer-links a {
     color: var(--text);
     text-decoration: none;
     font-size: 13px;
     transition: color 0.2s;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 4px;
   }
   .footer-links a:hover { color: var(--green); }
 
@@ -381,6 +468,174 @@
     text-align: center;
     font-size: 12px;
     color: var(--text-soft);
+  }
+  .footer-bottom a { color: var(--text-soft); text-decoration: underline; }
+  .footer-bottom a:hover { color: var(--green); }
+
+  /* ── P3.2: Accessibility Widget ── */
+  .a11y-widget-btn {
+    position: fixed;
+    inset-inline-start: 16px;
+    bottom: 16px;
+    z-index: 500;
+    background: var(--green);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 52px;
+    height: 52px;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    transition: background 0.2s;
+  }
+  .a11y-widget-btn:hover { background: var(--green-dark); }
+
+  .a11y-panel {
+    position: fixed;
+    inset-inline-start: 16px;
+    bottom: 80px;
+    z-index: 501;
+    background: var(--beige-light);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 20px 16px 16px;
+    width: 230px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+    display: none;
+    direction: rtl;
+  }
+  .a11y-panel.open { display: block; }
+
+  .a11y-panel-title {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--green-dark);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .a11y-panel-close {
+    position: absolute;
+    top: 8px;
+    inset-inline-start: 10px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: var(--text-soft);
+    cursor: pointer;
+    padding: 4px;
+    min-width: 36px;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+  }
+
+  .a11y-group-label {
+    font-size: 11px;
+    color: var(--text-soft);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .a11y-btn-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .a11y-ctrl {
+    flex: 1;
+    background: var(--beige);
+    border: 1px solid var(--line);
+    color: var(--text);
+    padding: 7px 6px;
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+    border-radius: 2px;
+    text-align: center;
+    min-height: 36px;
+    transition: background 0.15s;
+  }
+  .a11y-ctrl:hover { background: var(--beige-dark); }
+  .a11y-ctrl.active { background: var(--green); color: #fff; border-color: var(--green); }
+
+  /* High-contrast mode */
+  body.a11y-hc { background: #000 !important; color: #fff !important; }
+  body.a11y-hc .top-bar,
+  body.a11y-hc footer,
+  body.a11y-hc section,
+  body.a11y-hc .about,
+  body.a11y-hc .gallery,
+  body.a11y-hc .info,
+  body.a11y-hc .wine-kitchen { background: #000 !important; }
+  body.a11y-hc p, body.a11y-hc h1, body.a11y-hc h2, body.a11y-hc h3,
+  body.a11y-hc span, body.a11y-hc li { color: #fff !important; }
+  body.a11y-hc .section-label { color: #ff0 !important; }
+  body.a11y-hc .btn-primary { background: #fff !important; color: #000 !important; border-color:#fff !important; }
+  body.a11y-hc a { color: #6cf !important; }
+  body.a11y-hc :focus-visible { outline-color: #ff0 !important; }
+
+  body.a11y-links a:not(.btn):not(.skip-link) {
+    text-decoration: underline !important;
+    text-underline-offset: 3px;
+  }
+
+  body.a11y-font, body.a11y-font * {
+    font-family: Arial, Helvetica, sans-serif !important;
+    line-height: 1.9 !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  /* ── P5.2: Modal ── */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    background: rgba(30,30,27,0.6);
+    backdrop-filter: blur(4px);
+    padding: 20px;
+  }
+  .modal-backdrop.open { display: flex; }
+
+  .modal-box {
+    background: var(--beige-light);
+    max-width: 440px;
+    width: 100%;
+    padding: 48px 44px 40px;
+    position: relative;
+    text-align: center;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 12px;
+    inset-inline-start: 14px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: var(--text-soft);
+    cursor: pointer;
+    font-family: inherit;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
   }
 
   /* ── Responsive ── */
@@ -394,8 +649,6 @@
     .section-title { font-size: 26px; }
     .two-col { grid-template-columns: 1fr; gap: 36px; }
     .two-col-img { height: 340px; }
-    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-    .gallery-item.wide { aspect-ratio: 4/3; }
     .info-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
     .final-cta { padding: 64px 20px; }
     .final-cta h2 { font-size: 26px; }
@@ -403,57 +656,81 @@
     .footer-links { justify-content: center; }
   }
 
+  @media (max-width: 700px) {
+    .carousel-slide { min-width: 100%; }
+  }
+
   @media (max-width: 520px) {
     .hero-title { font-size: 28px; }
     .hero-logo { height: 64px; }
-    .gallery-grid { grid-template-columns: 1fr; }
-    .gallery-item.wide { grid-column: span 1; aspect-ratio: 4/3; }
     .info-grid { grid-template-columns: 1fr; }
     .cta-row { flex-direction: column; align-items: stretch; }
-    .cta-row .btn { text-align: center; }
+    .cta-row .btn { justify-content: center; }
   }
 </style>
 </head>
 <body>
 
-<!-- Hiring Popup -->
-<div id="hiring-popup" style="
-  display:flex;
-  position:fixed;
-  inset:0;
-  z-index:1000;
-  align-items:center;
-  justify-content:center;
-  background:rgba(30,30,27,0.6);
-  backdrop-filter:blur(4px);
-  padding:20px;
-">
-  <div style="
-    background:var(--beige-light);
-    max-width:440px;
-    width:100%;
-    padding:48px 44px 40px;
-    position:relative;
-    text-align:center;
-  ">
-    <button onclick="document.getElementById('hiring-popup').style.display='none'" style="
-      position:absolute;
-      top:16px;
-      left:20px;
-      background:none;
-      border:none;
-      font-size:20px;
-      color:var(--text-soft);
-      cursor:pointer;
-      line-height:1;
-      font-family:inherit;
-    ">&#x2715;</button>
+<!-- P1 §4.2 — Skip link: first focusable element -->
+<a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
 
-    <img src="images/logo.png" alt="נוף בחצר" style="height:64px;width:auto;margin-bottom:24px;">
+<!-- P3.2 — Accessibility Widget -->
+<button
+  class="a11y-widget-btn"
+  id="a11yWidgetBtn"
+  aria-label="פתח תפריט נגישות"
+  aria-expanded="false"
+  aria-controls="a11yPanel"
+>♿</button>
 
-    <div style="font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--green);margin-bottom:14px;font-weight:400;">מגייסים צוות</div>
+<div
+  class="a11y-panel"
+  id="a11yPanel"
+  role="region"
+  aria-label="אפשרויות נגישות"
+>
+  <button class="a11y-panel-close" id="a11yPanelClose" aria-label="סגור תפריט נגישות">✕</button>
+  <p class="a11y-panel-title">נגישות</p>
 
-    <h2 style="font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:400;color:var(--text);margin-bottom:16px;line-height:1.35;">
+  <span class="a11y-group-label">גודל טקסט</span>
+  <div class="a11y-btn-row">
+    <button class="a11y-ctrl" id="fontIncrease" aria-label="הגדל טקסט">א+</button>
+    <button class="a11y-ctrl" id="fontDecrease" aria-label="הקטן טקסט">א−</button>
+    <button class="a11y-ctrl" id="fontReset" aria-label="אפס גודל טקסט">אפס</button>
+  </div>
+
+  <span class="a11y-group-label">תצוגה</span>
+  <div class="a11y-btn-row">
+    <button class="a11y-ctrl" id="toggleContrast" aria-pressed="false">ניגודיות גבוהה</button>
+  </div>
+  <div class="a11y-btn-row">
+    <button class="a11y-ctrl" id="toggleLinks" aria-pressed="false">הדגשת קישורים</button>
+    <button class="a11y-ctrl" id="toggleFont" aria-pressed="false">גופן קריא</button>
+  </div>
+  <div class="a11y-btn-row">
+    <button class="a11y-ctrl" id="toggleMotion" aria-pressed="false">עצור תנועה</button>
+  </div>
+</div>
+
+<!-- P5.2 — Accessible Hiring Modal (hidden until auto-opened once per session) -->
+<div
+  class="modal-backdrop"
+  id="hiringBackdrop"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="hiringTitle"
+>
+  <div class="modal-box">
+    <button class="modal-close" id="modalCloseBtn" aria-label="סגור חלון">&#x2715;</button>
+
+    <!-- Logo here is decorative — alt="" -->
+    <img src="images/logo.png" alt="" aria-hidden="true" style="height:64px;width:auto;margin-bottom:24px;">
+
+    <!-- decorative eyebrow label -->
+    <p aria-hidden="true" style="font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--green);margin-bottom:14px;font-weight:400;">מגייסים צוות</p>
+
+    <!-- h2 is the modal title — labelledby points here -->
+    <h2 id="hiringTitle" style="font-family:'Frank Ruhl Libre',serif;font-size:26px;font-weight:400;color:var(--text);margin-bottom:16px;line-height:1.35;">
       אנשים טובים שהם משפחה
     </h2>
 
@@ -462,330 +739,494 @@
       תנאים מעולים, סביבת עבודה חמה ומשפחתית, ומקום שבאמת שווה לבוא אליו בבוקר.
     </p>
 
-    <a href="https://api.whatsapp.com/send?phone=9720542364455&text=%D7%94%D7%99%D7%99%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%A9%D7%90%D7%AA%D7%9D%20%D7%9E%D7%92%D7%99%D7%99%D7%A1%D7%99%D7%9D%20%D7%A6%D7%95%D7%95%D7%AA%20%F0%9F%99%82" target="_blank" style="
-      display:inline-block;
-      background:var(--green);
-      color:var(--white);
-      text-decoration:none;
-      padding:13px 32px;
-      font-size:14px;
-      letter-spacing:1px;
-      border:1px solid var(--green);
-      font-family:inherit;
-      margin-bottom:14px;
-      transition:background 0.2s;
-    ">שלחו לנו וואטסאפ</a>
+    <a
+      id="modalWhatsappLink"
+      href="https://api.whatsapp.com/send?phone=9720542364455&text=%D7%94%D7%99%D7%99%2C%20%D7%A8%D7%90%D7%99%D7%AA%D7%99%20%D7%A9%D7%90%D7%AA%D7%9D%20%D7%9E%D7%92%D7%99%D7%99%D7%A1%D7%99%D7%9D%20%D7%A6%D7%95%D7%95%D7%AA%20%F0%9F%99%82"
+      target="_blank"
+      rel="noopener noreferrer"
+      style="display:inline-flex;align-items:center;justify-content:center;background:var(--green);color:var(--white);text-decoration:none;padding:13px 32px;font-size:14px;letter-spacing:1px;border:1px solid var(--green);font-family:inherit;margin-bottom:14px;min-height:44px;transition:background 0.2s;"
+    >שלחו לנו וואטסאפ</a>
 
     <div style="margin-top:4px;">
-      <button onclick="document.getElementById('hiring-popup').style.display='none'" style="
-        background:none;
-        border:none;
-        font-size:13px;
-        color:var(--text-soft);
-        cursor:pointer;
-        font-family:inherit;
-        text-decoration:underline;
-      ">אולי בפעם אחרת</button>
+      <button
+        id="modalDismissBtn"
+        style="background:none;border:none;font-size:13px;color:var(--text-soft);cursor:pointer;font-family:inherit;text-decoration:underline;min-height:44px;padding:0 8px;"
+      >אולי בפעם אחרת</button>
     </div>
   </div>
 </div>
 
-
+<!-- Header — P1 §4.1 landmark -->
 <header class="top-bar">
   <div class="top-bar-inner">
-    <a href="#" class="logo">
-      <img src="images/logo.png" alt="נוף בחצר">
+    <!-- P5.4: logo points to main content (not bare #) -->
+    <a href="#main-content" class="logo" aria-label="נוף בחצר — חזרה לראש העמוד">
+      <img src="images/logo.png" alt="" aria-hidden="true">
       <span class="logo-tagline">בר וחנות יין<br>הוד השרון</span>
     </a>
-    <nav class="top-nav">
+    <nav class="top-nav" aria-label="ניווט ראשי">
       <a href="#about">אודות</a>
       <a href="#gallery">גלריה</a>
       <a href="#info">פרטים</a>
-      <a href="https://hopa.tech/nof-bahatzer" target="_blank">תפריט</a>
-      <a href="https://ontopo.co.il/nofbahatzer?source=homepage" target="_blank">הזמנת מקום</a>
+      <!-- P7: unified menu link (hopa.tech) -->
+      <a href="https://hopa.tech/nof-bahatzer" target="_blank" rel="noopener noreferrer">תפריט</a>
+      <a href="https://ontopo.co.il/nofbahatzer?source=homepage" target="_blank" rel="noopener noreferrer">הזמנת מקום</a>
     </nav>
   </div>
 </header>
 
-<!-- Hero -->
-<section class="hero">
-  <video class="hero-media" autoplay muted loop playsinline poster="images/hero-poster.jpg">
-    <source src="hero-video.mp4" type="video/mp4">
-  </video>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <img class="hero-logo" src="images/logo.png" alt="נוף בחצר">
-    <div class="hero-eyebrow">המכבים 29, הוד השרון</div>
-    <h1 class="hero-title">חצר אורבנית קסומה<br><span style="font-size:0.62em;font-weight:300;opacity:0.88;letter-spacing:2px;line-height:0.6;display:block;">בלב השרון</span></h1>
-    <p class="hero-text">
-      בית קפה בבוקר, בר יין בערב וחנות יין לכל אורך היום.<br>
-      מקום מפגש סביב יין טוב, אוכל טרי וטעים ומוזיקה שמחברת הכל יחד.
-    </p>
-    <div class="cta-row">
-      <a href="https://ontopo.co.il/nofbahatzer?source=homepage" target="_blank" class="btn btn-primary">הזמנת מקום</a>
-      <a href="https://nof-bahatzer.web.delivery/" target="_blank" class="btn btn-secondary">לתפריט</a>
-    </div>
-  </div>
-</section>
+<!-- P1 §4.1 — <main> landmark -->
+<main id="main-content">
 
-<!-- About -->
-<section class="about" id="about">
-  <div class="container">
-    <div class="two-col">
-      <div class="text-block">
-        <div class="section-label">המקום</div>
-        <h2 class="section-title">חצר קטנה, אווירה גדולה</h2>
-        <p class="section-text">
-          בחצר אורבנית קסומה בלב הוד השרון נפגשים יין, אוכל טוב ואנשים טובים.
-          בית קפה בבוקר, בר יין בערב — מקום מפגש שמזמין אתכם פשוט להגיע, להירגע ולהנות.
-        </p>
-        <br>
-        <p class="section-text">
-          המטבח שלנו עונתי וקליל: מנות שניתן לחלוק, עם חומרי גלם האיכותיים ביותר.
-          אנחנו לא מתחכמים יתר על המידה — רק טריות ועונתיות בכל צלחת.
-        </p>
-      </div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; height:520px;">
-        <img style="width:100%;height:100%;object-fit:cover;" src="images/food-3.jpg" alt="פיצה ובירה" loading="lazy">
-        <img style="width:100%;height:100%;object-fit:cover;" src="images/food-2.jpg" alt="מנה עונתית" loading="lazy">
+  <!-- Hero section -->
+  <section class="hero" aria-label="כותרת ראשית">
+    <video
+      id="heroVideo"
+      class="hero-media"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster="images/hero-poster.jpg"
+      aria-hidden="true"
+    >
+      <source src="hero-video.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="hero-content">
+      <!-- decorative logo repeat — aria-hidden so screen reader doesn't repeat the name -->
+      <img class="hero-logo" src="images/logo.png" alt="" aria-hidden="true">
+      <p class="hero-eyebrow">המכבים 29, הוד השרון</p>
+      <h1 class="hero-title">
+        חצר אורבנית קסומה
+        <span style="font-size:0.62em;font-weight:300;opacity:0.88;letter-spacing:2px;line-height:0.6;display:block;">בלב השרון</span>
+      </h1>
+      <p class="hero-text">
+        בית קפה בבוקר, בר יין בערב וחנות יין לכל אורך היום.<br>
+        מקום מפגש סביב יין טוב, אוכל טרי וטעים ומוזיקה שמחברת הכל יחד.
+      </p>
+      <div class="cta-row">
+        <a href="https://ontopo.co.il/nofbahatzer?source=homepage" target="_blank" rel="noopener noreferrer" class="btn btn-primary">הזמנת מקום</a>
+        <a href="https://hopa.tech/nof-bahatzer" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">לתפריט</a>
       </div>
     </div>
-  </div>
-</section>
+    <!-- P5.1: accessible video pause/play button -->
+    <button
+      id="videoToggle"
+      class="video-toggle"
+      aria-label="עצור וידאו רקע"
+      aria-pressed="false"
+    >⏸</button>
+  </section>
 
-<!-- Wine & Kitchen -->
-<section class="wine-kitchen">
-  <div class="container">
-    <div class="two-col">
-      <div class="text-block">
-        <div class="section-label">יין ומטבח</div>
-        <h2 class="section-title">מעל 120 סוגי יין, תפריט שמתחלף כל יום</h2>
-        <p class="section-text">
-          בחנות היין שלנו תמצאו מעל 120 סוגי יין ממדינות שונות מסביב לעולם — את כולם ניתן לפתוח ולשתות ישירות בישיבה.
-          תפריט היין שלנו מתחלף על בסיס יומי, כדי שתמיד תמצאו משהו חדש.
-        </p>
-        <br>
-        <p class="section-text">
-          כחנות יין אנחנו מתחייבים למחיר הכי משתלם בישראל. מגוון עשיר, מחירים הוגנים — לקנייה הביתה ולשתייה במקום.
-        </p>
-      </div>
-      <img class="two-col-img" src="images/wine.jpg" alt="כוס יין בחצר">
-    </div>
-  </div>
-</section>
-
-<!-- Gallery -->
-<section class="gallery" id="gallery">
-  <div class="container">
-    <div class="gallery-header">
-      <div class="section-label">גלריה</div>
-      <h2 class="section-title">רגעים מהחצר</h2>
-      <p class="section-text">הצצה לאווירה, לאוכל וליינות שמחכים לכם.</p>
-    </div>
-    <!-- Carousel -->
-    <div class="carousel-wrap">
-      <button class="carousel-btn carousel-prev" onclick="moveCarousel(-1)" aria-label="הקודם">&#8249;</button>
-      <div class="carousel-track-wrap">
-        <div class="carousel-track" id="carouselTrack">
-          <div class="carousel-slide"><img src="images/gallery-1.jpg" alt="שולחנות בערב"></div>
-          <div class="carousel-slide"><img src="images/gallery-7.jpg" alt="קרשית גבינות ובשרים"></div>
-          <div class="carousel-slide"><img src="images/gallery-2.jpg" alt="חבורה סביב שולחן"></div>
-          <div class="carousel-slide"><img src="images/food-3.jpg" alt="פיצה ובירה"></div>
-          <div class="carousel-slide"><img src="images/gallery-4.jpg" alt="בקבוקי יין"></div>
-          <div class="carousel-slide"><img src="images/gallery-5.jpg" alt="חנות היין"></div>
-          <div class="carousel-slide"><img src="images/food-2.jpg" alt="מנה עונתית"></div>
+  <!-- About -->
+  <section class="about" id="about" aria-labelledby="about-heading">
+    <div class="container">
+      <div class="two-col">
+        <div class="text-block">
+          <!-- section-label is decorative/presentational, aria-hidden -->
+          <p class="section-label" aria-hidden="true">המקום</p>
+          <h2 id="about-heading" class="section-title">חצר קטנה, אווירה גדולה</h2>
+          <p class="section-text">
+            בחצר אורבנית קסומה בלב הוד השרון נפגשים יין, אוכל טוב ואנשים טובים.
+            בית קפה בבוקר, בר יין בערב — מקום מפגש שמזמין אתכם פשוט להגיע, להירגע ולהנות.
+          </p>
+          <br>
+          <p class="section-text">
+            המטבח שלנו עונתי וקליל: מנות שניתן לחלוק, עם חומרי גלם האיכותיים ביותר.
+            אנחנו לא מתחכמים יתר על המידה — רק טריות ועונתיות בכל צלחת.
+          </p>
+        </div>
+        <!-- food images are decorative in context; text already describes the food -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;height:520px;" aria-hidden="true">
+          <img style="width:100%;height:100%;object-fit:cover;" src="images/food-3.jpg" alt="" loading="lazy">
+          <img style="width:100%;height:100%;object-fit:cover;" src="images/food-2.jpg" alt="" loading="lazy">
         </div>
       </div>
-      <button class="carousel-btn carousel-next" onclick="moveCarousel(1)" aria-label="הבא">&#8250;</button>
     </div>
+  </section>
 
-    <!-- Dots -->
-    <div class="carousel-dots" id="carouselDots"></div>
-  </div>
-</section>
-
-<style>
-  .carousel-wrap {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .carousel-track-wrap {
-    overflow: hidden;
-    flex: 1;
-    border-radius: 2px;
-  }
-  .carousel-track {
-    display: flex;
-    transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
-    will-change: transform;
-  }
-  .carousel-slide {
-    min-width: 33.333%;
-    aspect-ratio: 3/4;
-    flex-shrink: 0;
-    overflow: hidden;
-    max-height: 380px;
-  }
-  .carousel-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s ease;
-  }
-  .carousel-slide:hover img { transform: scale(1.04); }
-  .carousel-btn {
-    background: var(--beige-light);
-    border: 1px solid var(--line);
-    color: var(--green-dark);
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    font-size: 22px;
-    cursor: pointer;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s;
-    line-height: 1;
-  }
-  .carousel-btn:hover { background: var(--beige-dark); }
-  .carousel-dots {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 20px;
-  }
-  .carousel-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--line);
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    transition: background 0.2s;
-  }
-  .carousel-dot.active { background: var(--green); }
-
-  @media (max-width: 700px) {
-    .carousel-slide { min-width: 100%; }
-  }
-</style>
-
-<script>
-  const track = document.getElementById('carouselTrack');
-  const slides = track.querySelectorAll('.carousel-slide');
-  const dotsWrap = document.getElementById('carouselDots');
-  let current = 0;
-  const visible = window.innerWidth <= 700 ? 1 : 3;
-  const total = slides.length;
-  const max = total - visible;
-
-  // Build dots
-  for (let i = 0; i <= max; i++) {
-    const d = document.createElement('button');
-    d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-    d.setAttribute('aria-label', 'תמונה ' + (i + 1));
-    d.onclick = () => goTo(i);
-    dotsWrap.appendChild(d);
-  }
-
-  function goTo(n) {
-    current = Math.max(0, Math.min(n, max));
-    const slideW = slides[0].getBoundingClientRect().width;
-    track.style.transform = `translateX(${current * slideW}px)`;
-    dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => {
-      d.classList.toggle('active', i === current);
-    });
-  }
-
-  function moveCarousel(dir) { goTo(current + dir); }
-
-  // Touch/swipe support
-  let startX = 0;
-  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
-  track.addEventListener('touchend', e => {
-    const dx = startX - e.changedTouches[0].clientX;
-    if (Math.abs(dx) > 40) moveCarousel(dx > 0 ? 1 : -1);
-  });
-</script>
-
-<!-- Info -->
-<section class="info" id="info">
-  <div class="container">
-    <div class="info-grid">
-
-      <div class="info-block">
-        <h3>שעות פעילות</h3>
-        <div class="hours-line"><span>ראשון–חמישי</span><span>23:00–10:00</span></div>
-        <div class="hours-line"><span>שישי</span><span>16:00–08:00</span></div>
-        <div class="hours-line"><span>שבת</span><span>23:00–20:00</span></div>
+  <!-- Wine & Kitchen -->
+  <section class="wine-kitchen" aria-labelledby="wine-heading">
+    <div class="container">
+      <div class="two-col">
+        <div class="text-block">
+          <p class="section-label" aria-hidden="true">יין ומטבח</p>
+          <h2 id="wine-heading" class="section-title">מעל 120 סוגי יין, תפריט שמתחלף כל יום</h2>
+          <p class="section-text">
+            בחנות היין שלנו תמצאו מעל 120 סוגי יין ממדינות שונות מסביב לעולם — את כולם ניתן לפתוח ולשתות ישירות בישיבה.
+            תפריט היין שלנו מתחלף על בסיס יומי, כדי שתמיד תמצאו משהו חדש.
+          </p>
+          <br>
+          <p class="section-text">
+            כחנות יין אנחנו מתחייבים למחיר הכי משתלם בישראל. מגוון עשיר, מחירים הוגנים — לקנייה הביתה ולשתייה במקום.
+          </p>
+        </div>
+        <img class="two-col-img" src="images/wine.jpg" alt="כוס יין אדום על שולחן עץ בחצר הפנימית" loading="lazy">
       </div>
-
-      <div class="info-block">
-        <h3>הזמנת מקומות</h3>
-        <p>
-          הזמנת מקומות מתאפשרת בערבים בין השעות 16:00–20:00 בלבד.
-          בכל שאר הזמן הישיבה על בסיס מקום פנוי.
-        </p>
-      </div>
-
-      <div class="info-block">
-        <h3>חנייה וכתובת</h3>
-        <p>
-          המכבים 29, נווה נאמן, הוד השרון.
-          שימו לב — אין חנייה ברחוב המכבים.
-          ישנם 2 מגרשי חנייה ייעודיים סביב החצר, ובמרחק כ-150 צעדים מקניון שרונים.
-        </p>
-      </div>
-
-      <div class="info-block">
-        <h3>שעה שמחה</h3>
-        <p>
-          ימי א'–ד', 16:00–10:00 — 20% הנחה על כל האלכוהול.<br>
-          18:30–16:00 — 20% הנחה על כל התפריט.
-        </p>
-        <span class="tag">שווה להקדים</span>
-      </div>
-
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Final CTA -->
-<section class="final-cta">
-  <div class="container">
-    <div class="section-label">מחכים לכם</div>
-    <h2>אצלנו, כל ערב הוא הזדמנות</h2>
-    <p>הזמינו מקום מראש או הציצו בתפריט המלא לפני שמגיעים.</p>
-    <div class="cta-row">
-      <a href="https://ontopo.co.il/nofbahatzer?source=homepage" target="_blank" class="btn btn-primary">הזמנת מקום</a>
-      <a href="https://hopa.tech/nof-bahatzer" target="_blank" class="btn btn-secondary">לתפריט</a>
+  <!-- Gallery -->
+  <section class="gallery" id="gallery" aria-labelledby="gallery-heading">
+    <div class="container">
+      <div class="gallery-header">
+        <p class="section-label" aria-hidden="true">גלריה</p>
+        <h2 id="gallery-heading" class="section-title">רגעים מהחצר</h2>
+        <p class="section-text">הצצה לאווירה, לאוכל וליינות שמחכים לכם.</p>
+      </div>
+
+      <!-- P5.3: Accessible carousel with keyboard + aria -->
+      <div
+        class="carousel-wrap"
+        role="region"
+        aria-label="גלריית תמונות — נוף בחצר"
+        aria-roledescription="קרוסלה"
+      >
+        <!-- RTL: "prev" arrow (‹) is on the left side visually = logically advances to later images -->
+        <button class="carousel-btn carousel-prev" id="carouselPrev" aria-label="קבוצת תמונות הבאה">&#8249;</button>
+        <div class="carousel-track-wrap">
+          <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-slide" aria-roledescription="שקופית">
+              <img src="images/gallery-1.jpg" alt="שולחנות ערוכים בחצר בשעות הערב" loading="lazy">
+            </div>
+            <div class="carousel-slide" aria-roledescription="שקופית">
+              <img src="images/gallery-7.jpg" alt="קרשית גבינות, בשרים ופירות יבשים" loading="lazy">
+            </div>
+            <div class="carousel-slide" aria-roledescription="שקופית">
+              <img src="images/gallery-2.jpg" alt="חבורת חברים סביב שולחן בחצר" loading="lazy">
+            </div>
+            <div class="carousel-slide" aria-roledescription="שקופית">
+              <img src="images/food-3.jpg" alt="פיצה טרייה יוצאת מהתנור" loading="lazy">
+            </div>
+            <div class="carousel-slide" aria-roledescription="שקופית">
+              <img src="images/gallery-4.jpg" alt="בקבוקי יין על מדפי חנות היין" loading="lazy">
+            </div>
+            <div class="carousel-slide" aria-roledescription="שקופית">
+              <img src="images/gallery-5.jpg" alt="מבט כללי על חנות היין — מדפים עמוסי בקבוקים" loading="lazy">
+            </div>
+            <div class="carousel-slide" aria-roledescription="שקופית">
+              <img src="images/food-2.jpg" alt="מנה עונתית צבעונית על צלחת" loading="lazy">
+            </div>
+          </div>
+        </div>
+        <button class="carousel-btn carousel-next" id="carouselNext" aria-label="קבוצת תמונות הקודמת">&#8250;</button>
+      </div>
+      <div class="carousel-dots" id="carouselDots" role="group" aria-label="בחירת תמונה בגלריה"></div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Footer -->
+  <!-- Info -->
+  <section class="info" id="info" aria-labelledby="info-heading">
+    <div class="container">
+      <h2 id="info-heading" class="section-title" style="margin-bottom:40px;">מידע שימושי</h2>
+      <div class="info-grid">
+
+        <div class="info-block">
+          <h3>שעות פעילות</h3>
+          <div class="hours-line"><span>ראשון–חמישי</span><span>23:00–10:00</span></div>
+          <div class="hours-line"><span>שישי</span><span>16:00–08:00</span></div>
+          <div class="hours-line"><span>שבת</span><span>23:00–20:00</span></div>
+        </div>
+
+        <div class="info-block">
+          <h3>הזמנת מקומות</h3>
+          <p>
+            הזמנת מקומות מתאפשרת בערבים בין השעות 16:00–20:00 בלבד.
+            בכל שאר הזמן הישיבה על בסיס מקום פנוי.
+          </p>
+        </div>
+
+        <div class="info-block">
+          <h3>חנייה וכתובת</h3>
+          <p>
+            המכבים 29, נווה נאמן, הוד השרון.
+            שימו לב — אין חנייה ברחוב המכבים.
+            ישנם 2 מגרשי חנייה ייעודיים סביב החצר, ובמרחק כ-150 צעדים מקניון שרונים.
+          </p>
+        </div>
+
+        <div class="info-block">
+          <h3>שעה שמחה</h3>
+          <p>
+            ימי א'–ד', 10:00–16:00 — 20% הנחה על כל האלכוהול.<br>
+            16:00–18:30 — 20% הנחה על כל התפריט.
+          </p>
+          <span class="tag">שווה להקדים</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="final-cta" aria-labelledby="cta-heading">
+    <div class="container">
+      <p class="section-label" aria-hidden="true">מחכים לכם</p>
+      <h2 id="cta-heading">אצלנו, כל ערב הוא הזדמנות</h2>
+      <p>הזמינו מקום מראש או הציצו בתפריט המלא לפני שמגיעים.</p>
+      <div class="cta-row">
+        <a href="https://ontopo.co.il/nofbahatzer?source=homepage" target="_blank" rel="noopener noreferrer" class="btn btn-primary">הזמנת מקום</a>
+        <a href="https://hopa.tech/nof-bahatzer" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">לתפריט</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer — P1 §4.1 landmark -->
 <footer>
   <div class="footer-inner">
     <div class="footer-left">
       <img class="footer-logo" src="images/logo.png" alt="נוף בחצר">
       <p>המכבים 29, הוד השרון</p>
     </div>
-    <div class="footer-links">
-      <a href="tel:0542364455">054-236-4455</a>
-      <a href="https://api.whatsapp.com/send?phone=9720542364455" target="_blank">וואטסאפ</a>
-      <a href="https://www.instagram.com/nof_bahatzer/" target="_blank">אינסטגרם</a>
-      <a href="https://www.facebook.com/NofBahatzer" target="_blank">פייסבוק</a>
-      <a href="https://ul.waze.com/ul?place=ChIJeQuFI0c3HRURw18fzwSKnC8&ll=32.13455860%2C34.90013280&navigate=yes" target="_blank">ניווט</a>
-    </div>
+    <nav class="footer-links" aria-label="קישורים — צור קשר ורשתות חברתיות">
+      <a href="tel:0542364455" aria-label="התקשרו אלינו: 054-236-4455">054-236-4455</a>
+      <a href="https://api.whatsapp.com/send?phone=9720542364455" target="_blank" rel="noopener noreferrer" aria-label="שלחו הודעה בוואטסאפ">וואטסאפ</a>
+      <a href="https://www.instagram.com/nof_bahatzer/" target="_blank" rel="noopener noreferrer" aria-label="עמוד אינסטגרם של נוף בחצר">אינסטגרם</a>
+      <a href="https://www.facebook.com/NofBahatzer" target="_blank" rel="noopener noreferrer" aria-label="עמוד פייסבוק של נוף בחצר">פייסבוק</a>
+      <a href="https://ul.waze.com/ul?place=ChIJeQuFI0c3HRURw18fzwSKnC8&ll=32.13455860%2C34.90013280&navigate=yes" target="_blank" rel="noopener noreferrer" aria-label="ניווט ב-Waze אל נוף בחצר">ניווט</a>
+    </nav>
   </div>
-  <div class="footer-bottom">© נוף בחצר. כל הזכויות שמורות.</div>
+  <div class="footer-bottom">
+    <p>© נוף בחצר. כל הזכויות שמורות.
+    &nbsp;|&nbsp;
+    <a href="accessibility.html">הצהרת נגישות</a></p>
+  </div>
 </footer>
+
+<script>
+/* ══════════════════════════════════════════
+   §5.2  Accessible Hiring Modal
+   Opens automatically, once per session
+══════════════════════════════════════════ */
+(function () {
+  const backdrop  = document.getElementById('hiringBackdrop');
+  const closeBtn  = document.getElementById('modalCloseBtn');
+  const dismissBtn = document.getElementById('modalDismissBtn');
+  let lastFocused = null;
+
+  function focusables() {
+    return Array.from(backdrop.querySelectorAll(
+      'a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex="-1"])'
+    ));
+  }
+
+  function openModal() {
+    lastFocused = document.activeElement;
+    backdrop.classList.add('open');
+    const els = focusables();
+    if (els.length) els[0].focus();
+  }
+
+  function closeModal() {
+    backdrop.classList.remove('open');
+    if (lastFocused) lastFocused.focus();
+  }
+
+  // Focus trap + Escape
+  backdrop.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { closeModal(); return; }
+    if (e.key !== 'Tab') return;
+    const els = focusables();
+    if (!els.length) return;
+    const first = els[0], last = els[els.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  });
+
+  // Close on backdrop-click (outside modal-box)
+  backdrop.addEventListener('click', function (e) {
+    if (e.target === backdrop) closeModal();
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  dismissBtn.addEventListener('click', closeModal);
+
+  // Auto-open once per session with slight delay
+  if (!sessionStorage.getItem('hiringPopupSeen')) {
+    setTimeout(function () {
+      openModal();
+      sessionStorage.setItem('hiringPopupSeen', '1');
+    }, 800);
+  }
+}());
+
+/* ══════════════════════════════════════════
+   §5.1  Hero Video Toggle
+══════════════════════════════════════════ */
+(function () {
+  const video = document.getElementById('heroVideo');
+  const btn   = document.getElementById('videoToggle');
+  if (!video || !btn) return;
+
+  btn.addEventListener('click', function () {
+    if (video.paused) {
+      video.play();
+      btn.setAttribute('aria-pressed', 'false');
+      btn.setAttribute('aria-label', 'עצור וידאו רקע');
+      btn.textContent = '⏸';
+    } else {
+      video.pause();
+      btn.setAttribute('aria-pressed', 'true');
+      btn.setAttribute('aria-label', 'הפעל וידאו רקע');
+      btn.textContent = '▶';
+    }
+  });
+}());
+
+/* ══════════════════════════════════════════
+   §5.3  Carousel
+══════════════════════════════════════════ */
+(function () {
+  const track    = document.getElementById('carouselTrack');
+  const dotsWrap = document.getElementById('carouselDots');
+  const prevBtn  = document.getElementById('carouselPrev');
+  const nextBtn  = document.getElementById('carouselNext');
+  if (!track) return;
+
+  const slides = Array.from(track.querySelectorAll('.carousel-slide'));
+  const total  = slides.length;
+  let current  = 0;
+
+  const visCount = () => window.innerWidth <= 700 ? 1 : 3;
+  const maxIdx   = () => total - visCount();
+
+  // Build navigation dots
+  slides.forEach(function (_, i) {
+    const d = document.createElement('button');
+    d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'תמונה ' + (i + 1) + ' מתוך ' + total);
+    d.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
+    d.addEventListener('click', function () { goTo(i); });
+    dotsWrap.appendChild(d);
+  });
+
+  function updateHidden() {
+    const vis = visCount();
+    slides.forEach(function (s, i) {
+      const hidden = i < current || i >= current + vis;
+      s.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+      s.inert = hidden; // prevent focus landing on hidden slides
+    });
+  }
+
+  function goTo(n) {
+    current = Math.max(0, Math.min(n, maxIdx()));
+    const w = slides[0].getBoundingClientRect().width;
+    track.style.transform = 'translateX(' + (current * w) + 'px)';
+    const dots = dotsWrap.querySelectorAll('.carousel-dot');
+    dots.forEach(function (d, i) {
+      const active = i === current;
+      d.classList.toggle('active', active);
+      d.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+    updateHidden();
+  }
+
+  // In RTL layout the left arrow (‹) advances forward visually,
+  // which means increasing the index in the array.
+  prevBtn.addEventListener('click', function () { goTo(current + 1); });
+  nextBtn.addEventListener('click', function () { goTo(current - 1); });
+
+  // Arrow-key navigation
+  track.setAttribute('tabindex', '0');
+  track.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(current - 1); }
+  });
+
+  // Touch / swipe
+  let startX = 0;
+  track.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; }, {passive: true});
+  track.addEventListener('touchend', function (e) {
+    const dx = startX - e.changedTouches[0].clientX;
+    if (Math.abs(dx) > 40) goTo(current + (dx > 0 ? 1 : -1));
+  });
+
+  updateHidden();
+}());
+
+/* ══════════════════════════════════════════
+   §3.2  Accessibility Widget
+══════════════════════════════════════════ */
+(function () {
+  const widgetBtn  = document.getElementById('a11yWidgetBtn');
+  const panel      = document.getElementById('a11yPanel');
+  const panelClose = document.getElementById('a11yPanelClose');
+
+  function openPanel() {
+    panel.classList.add('open');
+    widgetBtn.setAttribute('aria-expanded', 'true');
+    panelClose.focus();
+  }
+  function closePanel() {
+    panel.classList.remove('open');
+    widgetBtn.setAttribute('aria-expanded', 'false');
+    widgetBtn.focus();
+  }
+
+  widgetBtn.addEventListener('click', function () {
+    panel.classList.contains('open') ? closePanel() : openPanel();
+  });
+  panelClose.addEventListener('click', closePanel);
+  panel.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closePanel();
+  });
+
+  // Font size
+  var scale = 100;
+  document.getElementById('fontIncrease').addEventListener('click', function () {
+    scale = Math.min(scale + 10, 150);
+    document.documentElement.style.fontSize = scale + '%';
+  });
+  document.getElementById('fontDecrease').addEventListener('click', function () {
+    scale = Math.max(scale - 10, 80);
+    document.documentElement.style.fontSize = scale + '%';
+  });
+  document.getElementById('fontReset').addEventListener('click', function () {
+    scale = 100;
+    document.documentElement.style.fontSize = '';
+  });
+
+  // Toggle helpers
+  function makeToggle(id, cls) {
+    var btn = document.getElementById(id);
+    btn.addEventListener('click', function () {
+      var on = document.body.classList.toggle(cls);
+      btn.classList.toggle('active', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+  makeToggle('toggleContrast', 'a11y-hc');
+  makeToggle('toggleLinks',    'a11y-links');
+  makeToggle('toggleFont',     'a11y-font');
+
+  // Stop motion
+  var motionBtn = document.getElementById('toggleMotion');
+  motionBtn.addEventListener('click', function () {
+    var on = !motionBtn.classList.contains('active');
+    motionBtn.classList.toggle('active', on);
+    motionBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    var video = document.getElementById('heroVideo');
+    if (on) {
+      if (video) video.pause();
+      var s = document.createElement('style');
+      s.id = 'a11yStopMotion';
+      s.textContent = '*,*::before,*::after{transition-duration:0.01ms!important;animation-duration:0.01ms!important}';
+      document.head.appendChild(s);
+    } else {
+      if (video) video.play();
+      var s2 = document.getElementById('a11yStopMotion');
+      if (s2) s2.remove();
+    }
+  });
+}());
+</script>
 
 </body>
 </html>
